@@ -10,12 +10,12 @@ data:
   # Typha is disabled.
   typha_service_name: "none"
   # Configure the backend to use.
-  calico_backend: "{{ .Mode }}"
+  calico_backend: "bird"
 
   # Configure the MTU to use for workload interfaces and tunnels.
   # By default, MTU is auto-detected, and explicitly setting this field should not be required.
   # You can override auto-detection by providing a non-zero value.
-  veth_mtu: "{{ .MTU }}"
+  veth_mtu: "0"
 
   # The CNI network configuration to install on each node. The special
   # values in this config will be automatically populated.
@@ -32,13 +32,7 @@ data:
           "nodename": "__KUBERNETES_NODE_NAME__",
           "mtu": __CNI_MTU__,
           "ipam": {
-            {{ if .DualStack }}
-            "type": "calico-ipam",
-            "assign_ipv4": "true",
-            "assign_ipv6": "true"
-            {{ else }}
-            "type": "calico-ipam"
-            {{ end }}
+              "type": "calico-ipam"
           },
           "policy": {
               "type": "k8s"
@@ -58,4 +52,3 @@ data:
         }
       ]
     }
-

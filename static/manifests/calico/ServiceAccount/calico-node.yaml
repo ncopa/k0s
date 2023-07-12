@@ -1,8 +1,7 @@
 ---
-
+# Source: calico/templates/calico-node.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: calico-node
   namespace: kube-system
-

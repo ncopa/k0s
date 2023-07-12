@@ -37,8 +37,8 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: calico-kube-controllers
-          image: "{{ .CalicoKubeControllersImage }}"
-          imagePullPolicy: {{ .PullPolicy }}
+          image: docker.io/calico/kube-controllers:v3.24.5
+          imagePullPolicy: IfNotPresent
           env:
             # Choose which controllers to run.
             - name: ENABLED_CONTROLLERS
@@ -60,4 +60,3 @@ spec:
               - /usr/bin/check-status
               - -r
             periodSeconds: 10
-

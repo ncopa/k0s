@@ -12,9 +12,13 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
-        <link rel="canonical" href="https://docs.k0sproject.io/head/cli/k0s_install_controller/">
+        <link rel="canonical" href="https://docs.k0sproject.io/head/contributors/code_guidelines/">
       
       
+        <link rel="prev" href="../github_workflow/">
+      
+      
+        <link rel="next" href="../testing/">
       
       
         
@@ -25,7 +29,7 @@
     
     
       
-        <title>K0s install controller - Documentation</title>
+        <title>Code guidelines - Documentation</title>
       
     
     
@@ -85,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#k0s-install-controller" class="md-skip">
+        <a href="#code-guidelines" class="md-skip">
           Skip to content
         </a>
       
@@ -136,7 +140,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K0s install controller
+              Code guidelines
             
           </span>
         </div>
@@ -2360,7 +2364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         
   
   
@@ -2723,18 +2727,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
         
           
           <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
@@ -2755,7 +2761,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_12">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2773,7 +2779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2801,7 +2807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/github_workflow/" class="md-nav__link">
+      <a href="../github_workflow/" class="md-nav__link">
         
   
   
@@ -2826,10 +2832,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../contributors/code_guidelines/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code guidelines
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2845,6 +2878,109 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#size-the-code-to-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Size the code to the problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibility-across-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibility across versions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compatibility across versions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transitional-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitional code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2857,7 +2993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/testing/" class="md-nav__link">
+      <a href="../testing/" class="md-nav__link">
         
   
   
@@ -2885,7 +3021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors/docs/" class="md-nav__link">
+      <a href="../docs/" class="md-nav__link">
         
   
   
@@ -2930,6 +3066,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2938,55 +3076,66 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#k0s-install-controller" class="md-nav__link">
+  <a href="#size-the-code-to-the-problem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        k0s install controller
+        Size the code to the problem
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="k0s install controller">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibility-across-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibility across versions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compatibility across versions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#transitional-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Examples
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Options
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#options-inherited-from-parent-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Options inherited from parent commands
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SEE ALSO
+        Transitional code
       
     </span>
   </a>
@@ -2995,6 +3144,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tests
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3015,61 +3175,144 @@
 
 
 
-  <h1>K0s install controller</h1>
+<!--
+SPDX-FileCopyrightText: 2026 k0s authors
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
 
-<h2 id="k0s-install-controller">k0s install controller<a class="headerlink" href="#k0s-install-controller" title="Permanent link">#</a></h2>
-<p>Install k0s controller on a brand-new system. Must be run as root (or with sudo)</p>
-<div class="highlight"><pre><span></span><code>k0s install controller [flags]
-</code></pre></div>
-<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>All default values of controller command will be passed to the service stub unless overridden.
+<h1 id="code-guidelines">Code guidelines<a class="headerlink" href="#code-guidelines" title="Permanent link">#</a></h1>
+<p>This page collects guidelines for the k0s code base. Many of them stem from
+things that come up frequently during code reviews, or from k0s design
+constraints, such as being a per-node agent. These guidelines complement
+linters, which enforce general formatting and Go coding style. However, linters
+perform static code analysis and can't judge broader concepts, such as whether a
+change is the right size or if a comment is appropriate and accurate.</p>
+<p>None of this is set in stone. The right trade-off depends on what a particular
+change does, and reviewers may weigh things differently from case to case. The
+guidelines also evolve with the project: if one of them stops serving its
+purpose, change it rather than working around it.</p>
+<p>Existing code doesn't follow all of this. When touching such code, prefer these
+guidelines over consistency with the surrounding code, but don't churn unrelated
+lines just to bring them in line.</p>
+<!--
+Areas that still need some guidance:
 
-With the controller subcommand you can setup a single node cluster by running:
+- Feature flags: when something should be behind a feature flag and when not.
+- Concurrency patterns
+- Dependencies
+  - What to consider when adding one
+  - CNCF allowed third-party license policy
+-->
 
-    k0s install controller --single
-</code></pre></div>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>      --api-server-stop-timeout duration               time to wait for the API server to stop
-  -c, --config string                                  config file, use '-' to read the config from stdin (default "/etc/k0s/k0s.yaml")
-      --cri-socket string                              container runtime socket to use, default to internal containerd. Format: [remote|docker]:[path-to-socket]
-      --data-dir string                                Data Directory for k0s. DO NOT CHANGE for an existing setup, things will break! (default "/var/lib/k0s")
-      --disable-components strings                     disable components (valid items: applier-manager,autopilot,control-api,coredns,csr-approver,endpoint-reconciler,helm,konnectivity-server,kube-controller-manager,kube-proxy,kube-scheduler,metrics-server,network-provider,node-role,system-rbac,update-prober,windows-node)
-      --enable-cloud-provider                          Whether or not to enable cloud provider support in kubelet
-      --enable-dynamic-config                          enable cluster-wide dynamic config based on custom resource
-      --enable-k0s-cloud-provider                      enables the k0s-cloud-provider (default false)
-      --enable-metrics-scraper                         enable scraping metrics from the controller components (kube-scheduler, kube-controller-manager)
-      --enable-worker                                  enable worker (default false)
-      --feature-gates mapStringBool                    feature gates to enable (comma separated list of key=value pairs)
-  -h, --help                                           help for controller
-      --ignore-pre-flight-checks                       continue even if pre-flight checks fail
-      --init-only                                      only initialize controller and exit
-      --iptables-mode string                           iptables mode (valid values: nft, legacy, auto). default: auto
-      --k0s-cloud-provider-port int                    the port that k0s-cloud-provider binds on (default 10258)
-      --k0s-cloud-provider-update-frequency duration   the frequency of k0s-cloud-provider node updates (default 2m0s)
-      --kube-controller-manager-extra-args string      extra args for kube-controller-manager
-      --kubelet-extra-args string                      extra args for kubelet
-      --kubelet-root-dir string                        Kubelet root directory for k0s
-      --labels mapStringString                         Node labels, list of key=value pairs
-  -l, --logging stringToString                         Logging Levels for the different components (default [containerd=info,etcd=info,konnectivity-server=1,kube-apiserver=1,kube-controller-manager=1,kube-scheduler=1,kubelet=1])
-      --no-taints                                      disable default taints for controller node
-      --profile string                                 worker profile to use on the node (default "default")
-      --single                                         enable single node (implies --enable-worker, default false)
-      --status-socket string                           Full file path to the socket file. (default: &lt;rundir&gt;/status.sock)
-      --taints strings                                 Node taints, list of key=value:effect strings
-      --token-file string                              Path to the file containing join-token.
-</code></pre></div>
-<h3 id="options-inherited-from-parent-commands">Options inherited from parent commands<a class="headerlink" href="#options-inherited-from-parent-commands" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>  -d, --debug                  Debug logging (implies verbose logging)
-      --debugListenOn string   Http listenOn for Debug pprof handler (default ":6060")
-  -e, --env stringArray        Set environment variables (&lt;name&gt;=&lt;value&gt; or just &lt;name&gt;)
-      --force                  Force init script creation
-      --start                  Start the service immediately after installation
-  -v, --verbose                Verbose logging
-</code></pre></div>
-<h3 id="see-also">SEE ALSO<a class="headerlink" href="#see-also" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="../k0s_install/">k0s install</a>  - Install k0s on a brand-new system. Must be run as root (or with sudo)</li>
-</ul>
+<h2 id="size-the-code-to-the-problem">Size the code to the problem<a class="headerlink" href="#size-the-code-to-the-problem" title="Permanent link">#</a></h2>
+<p>Match the amount of structure to what the change needs. A few lines at the call
+site don't need a helper, a helper doesn't need to be exported, and neither
+needs its own abstraction until there's a second user. Extra structure isn't
+free; it creates more surface area to read, review, and maintain.</p>
+<p>Remove dead code when you come across it, but keep such cleanups separate from
+functional changes, at least in the <a href="../github_workflow/#commit-push">commit message</a>.</p>
+<h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">#</a></h2>
+<p>Comments cost readers time every time they read the code. Keep them crisp. Don't
+comment on obvious things or things that readers can quickly figure out. Comment
+on what they can't, such as ordering requirements, timing assumptions, or
+compatibility with earlier versions. Judge a comment based on what it adds, not
+by its length. Restating what the code already says is unhelpful even in a
+single line, whereas a comment that explains an important, broader concept which
+can't be better documented elsewhere may span several sentences or even
+paragraphs.</p>
+<p>Comments describe the present, not the past. Version control holds the history.
+A comment that explains what the code used to do, which bug motivated a test, or
+how a change came about belongs in the <a href="../github_workflow/#commit-push">commit message</a>, not in the code.</p>
+<p>Avoid referencing file names or line numbers in comments. They become outdated
+with the next refactoring, and nothing will tell you. Refer to Go identifiers
+instead, using <a href="https://go.dev/doc/comment#doclinks">doc links</a> where possible, so that the reference stays navigable
+and tooling catches renames.</p>
+<h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">#</a></h2>
+<p>An error message is a fragment that gets chained with others through wrapping.
+Keep it lowercase and without trailing punctuation, as per the <a href="https://go.dev/wiki/CodeReviewComments#error-strings">Go
+conventions</a>, so that <code>failed to apply stack: cannot create
+resource: connection refused</code> reads as one line.</p>
+<p>Add context to an error only if it's neither part of the error already nor known
+to the caller anyway. Many errors, such as those returned by the standard
+library's I/O functions, are self-describing, and the caller knows which
+function it called. Wrapping them with a message that restates the operation
+adds noise, not information.</p>
+<h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">#</a></h2>
+<p>Logs are the primary tool users have to understand what k0s is doing on their
+systems. They're often read out of context, in between lots of other output, by
+someone who doesn't know the code. A good log message tells them what happened
+and, ideally, what they can do about it, such as which file, resource, or
+configuration to examine. That helps both sides. Users who can troubleshoot
+their own systems don't need to ask for help, and the questions that do reach
+the developers arrive with the right information attached.</p>
+<p>Log what helps readers understand what's going on and why. What's noise in one
+situation is a decisive hint in another, and the log level is what separates the
+two. It decides who sees a message, and when.</p>
+<p>For instance, a periodic task that finds nothing is noise at <code>Info</code> level, but
+useful at <code>Debug</code> level. Pick the level based on what the reader is expected to
+do with the message. As a rule of thumb, use <code>Debug</code> for details that only
+matter when troubleshooting, <code>Info</code> for the normal course of events, <code>Warn</code> for
+problems that k0s handles on its own, but that may need attention if they
+persist, and <code>Error</code> for failures that require someone to act.</p>
+<p>While retries are ongoing, log each failed attempt at <code>Debug</code> if failures are
+expected or at <code>Warn</code> if they are not. Escalate to <code>Error</code> once retries are
+exhausted or if the operation has not succeeded within a reasonable time. If the
+consequences aren't obvious, explain what will happen, e.g. if an operation will
+be retried, skipped, or abandoned.</p>
+<p>Prefer putting variable data, especially error values, into fields rather than
+into the message text, so that messages stay stable and searchable. Fields are
+useful when the same name is used across messages because a filter on that name
+finds every message about the same thing. Messages without placeholders work the
+other way around. They read the same wherever they're logged, so filtering on
+them finds all things affected by the same event. Values that no other message
+would share are fine in the message text. Keep messages in sync with the
+conditions they describe. When a condition changes, its message usually has to
+change, too.</p>
+<p>Unlike an error message, a log message stands on its own. Write it as a
+sentence, starting with a capital letter and without a trailing period.</p>
+<p>Log errors where they're handled, not where they're passed on. An error that's
+both logged and returned will usually end up in the logs once for every layer it
+passes through. When logging an error, avoid repeating what the error message
+already says. The message provides context, while the error provides the cause.</p>
+<h2 id="compatibility-across-versions">Compatibility across versions<a class="headerlink" href="#compatibility-across-versions" title="Permanent link">#</a></h2>
+<p>k0s is a per-node agent. Each node reads its own configuration at startup and
+acts locally. Cluster-wide coordination is the responsibility of the users or of
+additional tooling, such as <a href="../../autopilot/">Autopilot</a>, <a href="../../k0sctl-install/">k0sctl</a> or <a href="https://github.com/k0sproject/k0smotron">k0smotron</a>. Nodes are
+upgraded individually rather than all at once, so controllers and workers of
+adjacent versions run side by side for a while, within the limits of the
+<a href="../../version-skew-policy/">version skew policy</a>.</p>
+<p>Any change has to work under those conditions: a new version must interoperate
+with the previous one, and it must keep reading whatever an earlier version has
+persisted, on disk or in the cluster. The burden is on the newer version, since
+the older one can't know anything about behavior that didn't exist yet. Whatever
+it persists itself must either stay usable by the previous version, or be kept
+apart from what the previous version reads, for example by versioning its name
+or location.</p>
+<p>Prefer designs that converge node by node to those that require every node to
+flip simultaneously. If the old and new behaviors can't coexist, don't hide the
+switch in the upgrade. Keep the old behavior until users explicitly enable the
+new one so that they can choose when the disruption happens, and document what
+the switch entails.</p>
+<p>Changed configuration defaults must not alter the behavior of clusters that were
+created with a previous version. New clusters get the new defaults, while
+existing clusters keep behaving as before unless they opt in. This applies to
+defaults that stand in for a choice users could have made in the configuration,
+not to properties of the release itself, such as the versions of the components
+that k0s ships.</p>
+<h3 id="transitional-code">Transitional code<a class="headerlink" href="#transitional-code" title="Permanent link">#</a></h3>
+<p>Code that only exists to migrate from an earlier version or clean up leftovers
+will be removed eventually. Keep it small and local, and mark it with a <code>TODO</code>
+note indicating the version in which it can be removed. Don't build abstractions
+or test suites around something scheduled for deletion unless the logic is
+complex enough to justify the test. Verify it once and explain how in the pull
+request.</p>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">#</a></h2>
+<p>Use <a href="https://github.com/stretchr/testify">testify</a> for assertions, and add assertion messages that state the
+expectation, so that a failure reads as a sentence. Test names describe the
+behavior under test, not the reason the test was added. Use obviously made-up
+values for test inputs that aren't the subject of the test, so that it's clear
+which values matter and which don't. See the <a href="../testing/">testing guide</a> for how to run the
+different kinds of tests, and what's expected before a pull request is merged.</p>
 
 
 

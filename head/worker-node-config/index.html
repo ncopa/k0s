@@ -1246,6 +1246,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kubelet-serving-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubelet serving certificates
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2858,7 +2869,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
+    Contributing guidelines
   
 
     
@@ -2874,7 +2885,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Contributing
+    Contributing guidelines
   
 
           </label>
@@ -2894,7 +2905,7 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Overview
   
 
     
@@ -2923,6 +2934,34 @@
     
   
     GitHub Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributors/code_guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code guidelines
   
 
     
@@ -3070,6 +3109,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kubelet-serving-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubelet serving certificates
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3114,13 +3164,13 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 <p>The <code>k0s worker</code> command accepts the <code>--labels</code> flag, with which you can make the newly joined worker node register itself, in the Kubernetes API, with the given set of labels.</p>
 <p>For example, running the worker with <code>k0s worker --token-file k0s.token --labels="k0sproject.io/foo=bar,k0sproject.io/other=xyz"</code> results in:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
-<span class="go">NAME      STATUS     ROLES    AGE   VERSION               LABELS</span>
-<span class="go">worker0   NotReady   &lt;none&gt;   10s   v1.37.0-alpha.3+k0s   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,k0sproject.io/foo=bar,k0sproject.io/other=xyz,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker0,kubernetes.io/os=linux</span>
+<span class="go">NAME      STATUS     ROLES    AGE   VERSION       LABELS</span>
+<span class="go">worker0   NotReady   &lt;none&gt;   10s   v1.37.0+k0s   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,k0sproject.io/foo=bar,k0sproject.io/other=xyz,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker0,kubernetes.io/os=linux</span>
 </code></pre></div>
 <p>Controller worker nodes are assigned <code>node.k0sproject.io/role=control-plane</code> and <code>node-role.kubernetes.io/control-plane=true</code> labels:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>--show-labels
-<span class="go">NAME          STATUS     ROLES           AGE   VERSION               LABELS</span>
-<span class="go">controller0   NotReady   control-plane   10s   v1.37.0-alpha.3+k0s   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=worker0,kubernetes.io/os=linux,node.k0sproject.io/role=control-plane,node-role.kubernetes.io/control-plane=true</span>
+<span class="go">NAME          STATUS     ROLES           AGE   VERSION       LABELS</span>
+<span class="go">controller0   NotReady   control-plane   10s   v1.37.0+k0s   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=worker0,kubernetes.io/os=linux,node.k0sproject.io/role=control-plane,node-role.kubernetes.io/control-plane=true</span>
 </code></pre></div>
 <p><strong>Note:</strong> Setting the labels is only effective on the first registration of the node. Changing the labels thereafter has no effect.</p>
 <h2 id="taints">Taints<a class="headerlink" href="#taints" title="Permanent link">#</a></h2>
@@ -3148,6 +3198,49 @@ See also the <a href="../configuration/#configuration-examples">examples of k0s.
 profiles</a> and the <a href="https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/">list of possible
 Kubelet configuration
 fields</a>.</p>
+<h3 id="kubelet-serving-certificates">Kubelet serving certificates<a class="headerlink" href="#kubelet-serving-certificates" title="Permanent link">#</a></h3>
+<p>By default, k0s configures kubelets to request their serving certificates from
+the Kubernetes API via <a href="https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/">Certificate Signing Requests</a> (CSRs), by enabling
+<code>serverTLSBootstrap</code> in the generated kubelet configuration. The kubelet then
+requests a certificate from the <code>kubernetes.io/kubelet-serving</code> signer and uses
+it to serve its own API. Clients of that API verify the certificate against the
+cluster CA. The Kubernetes API server verifies it, for example, when serving
+<code>kubectl logs</code> and <code>kubectl exec</code> requests. Similarly, k0s's <code>metrics-server</code>
+component, which bundles the <a href="https://github.com/kubernetes-sigs/metrics-server">Kubernetes Metrics Server</a>, verifies it when
+scraping the kubelet's resource metrics. Other properly configured monitoring
+systems do the same.</p>
+<p>Kubernetes doesn't approve these CSRs automatically. k0s ships a controller
+component called <code>csr-approver</code> that does so, provided the request meets all of
+the following conditions:</p>
+<ul>
+<li>The PEM-encoded certificate request size doesn't exceed 512 KiB.</li>
+<li>It is a well-formed kubelet serving certificate request, according to
+  Kubernetes' validation rules.</li>
+<li>The certificate request has no more than 4096 SANs, counting DNS names and IP
+  addresses together.</li>
+<li>It was created by the very node it requests the certificate for. The
+  requesting user must have the <code>system:node:&lt;nodeName&gt;</code> name and be a member of
+  the <code>system:nodes</code> group, and the certificate's common name must be identical
+  to the requesting user name.</li>
+<li>The requested DNS names and IP addresses don't identify the cluster's control
+  plane or other in-cluster services: no IP address may be inside the service
+  CIDR(s), and no DNS name may be <code>kubernetes</code>, <code>kubernetes.default</code>, or a name
+  within the <code>svc</code> or cluster domains.</li>
+<li>The node exists in the cluster.</li>
+<li>The node's <code>status.addresses</code> contains no more than 4096 entries.</li>
+<li>The requested DNS names and IP addresses are all listed in the node's
+  <code>status.addresses</code>.</li>
+</ul>
+<p>Requests that don't meet these conditions are left pending, and the reason is
+logged by the k0s controller. Note that a node's addresses are reported by its
+kubelet, so flags like <code>--node-ip</code> directly influence which addresses a
+certificate may be issued for.</p>
+<p>The CSR approver checks for pending requests periodically. It only considers the
+newest pending request of each node per pass, so that a node can't hold up
+others by creating large numbers of requests. It can be turned off via <code>k0s
+controller --disable-components csr-approver</code>. In that case, kubelet serving
+certificates need to be approved by some other means, otherwise the affected
+kubelet APIs remain unavailable.</p>
 <h2 id="iptables-mode">IPTables Mode<a class="headerlink" href="#iptables-mode" title="Permanent link">#</a></h2>
 <p>k0s detects the iptables backend automatically based on the existing records. On a brand-new setup, <code>iptables-nft</code> will be used.
 There is an <code>--iptables-mode</code> flag to specify the mode explicitly. Valid values: <code>nft</code>, <code>legacy</code> and <code>auto</code> (default).</p>
@@ -3203,14 +3296,6 @@ There is an <code>--iptables-mode</code> flag to specify the mode explicitly. Va
     
     
     
-    <a href="https://x.com/k0sproject" target="_blank" rel="noopener" title="k0s on X" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M357.2 48h70.6L273.6 224.2 455 464H313L201.7 318.6 74.5 464H3.8l164.9-188.5L-5.2 48h145.6l100.5 132.9zm-24.8 373.8h39.1L119.1 88h-42z"/></svg>
-    </a>
-  
-    
-    
-    
-    
     <a href="https://blog.k0sproject.io/" target="_blank" rel="noopener" title="The k0sproject community blog" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M224 24c0-13.3 10.7-24 24-24 145.8 0 264 118.2 264 264 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-119.3-96.7-216-216-216-13.3 0-24-10.7-24-24M80 96c26.5 0 48 21.5 48 48v224c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48c-8.8 0-16-7.2-16-16v-64c0-8.8 7.2-16 16-16 79.5 0 144 64.5 144 144s-64.5 144-144 144S32 447.5 32 368V144c0-26.5 21.5-48 48-48m168 0c92.8 0 168 75.2 168 168 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-66.3-53.7-120-120-120-13.3 0-24-10.7-24-24s10.7-24 24-24"/></svg>
     </a>
@@ -3227,7 +3312,7 @@ There is an <code>--iptables-mode</code> flag to specify the mode explicitly. Va
     
     
     
-    <a href="https://kubernetes.slack.com/archives/C07VAPJUECS" target="_blank" rel="noopener" title="k0s on the k8s slack" class="md-social__link">
+    <a href="https://kubernetes.slack.com/archives/C0809EA06QZ" target="_blank" rel="noopener" title="#k0s-users on Kubernetes Slack" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M94.1 315.1c0 25.9-21.2 47.1-47.1 47.1S0 341 0 315.1 21.2 268 47.1 268h47.1v47.1zm23.7 0c0-25.9 21.2-47.1 47.1-47.1s47.1 21.2 47.1 47.1v117.8c0 25.9-21.2 47.1-47.1 47.1s-47.1-21.2-47.1-47.1zm47.1-189c-25.9 0-47.1-21.2-47.1-47.1s21.2-47 47.1-47S212 53.2 212 79.1v47.1h-47.1zm0 23.7c25.9 0 47.1 21.2 47.1 47.1S190.8 244 164.9 244H47.1C21.2 244 0 222.8 0 196.9s21.2-47.1 47.1-47.1zm189 47.1c0-25.9 21.2-47.1 47.1-47.1s47 21.2 47 47.1-21.2 47.1-47.1 47.1h-47.1v-47.1zm-23.7 0c0 25.9-21.2 47.1-47.1 47.1S236 222.8 236 196.9V79.1c0-25.9 21.2-47.1 47.1-47.1s47.1 21.2 47.1 47.1zm-47.1 189c25.9 0 47.1 21.2 47.1 47.1s-21.2 47-47.1 47-47.1-21.2-47.1-47.1v-47.1h47.1zm0-23.7c-25.9 0-47.1-21.2-47.1-47.1s21.2-47.1 47.1-47.1h117.8c25.9 0 47.1 21.2 47.1 47.1s-21.2 47.1-47.1 47.1z"/></svg>
     </a>
   
